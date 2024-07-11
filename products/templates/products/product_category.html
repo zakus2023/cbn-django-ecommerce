@@ -1,0 +1,27 @@
+{% extends 'frontpage/base.html'%}
+<!--  -->
+{% load static %}
+<!--  -->
+{% block title %} {{category}} {% endblock %}
+<!--  -->
+{% block content %}
+<div class="d-flex flex-column">
+  <h1 class="text-center text-black">{{category}}</h1>
+
+  <div class="container">
+    <div class="row mt-5 mb-5 text-center d-flex">
+      {% for product in product %}
+      <div class="col-sm w-100 h-3100 p-3">
+        <a class="text-decoration-none m-2" href="{% url 'products' product.categories.slug product.slug %}">
+          <img src="{{ product.photo.url }}" class="w-100 h-50" alt="" />
+          <p class="text-black">{{product.title}}</p>
+          <p>${{product.display_price}}</p>
+          <p>{{product.updated_at}}</p>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <br /><br /><br />
+  </div>
+</div>
+{% endblock %}

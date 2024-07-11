@@ -1,0 +1,17 @@
+{% extends 'frontpage/base.html' %}
+<!--  -->
+
+{% load static %}
+<!--  -->
+{% block title %}My Account{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Profile</h1>
+    <div class="flex"><span class="text-primary">Username: </span><span>{{user.username}}</span></div>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">logout</button>
+    </form>
+</div>
+{% endblock %}

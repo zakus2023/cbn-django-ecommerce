@@ -1,0 +1,11 @@
+<ul class="inline-flex gap-5 text-2xl font-bold list-unstyled p-3 mt-0">
+  {% for category in categories %}
+  <li>
+    <a
+      href="{% url 'product_category' category.slug %}"
+      class="text-decoration-none items-center text-black"
+      >{{category.title}}</a
+    >
+  </li>
+  {% endfor %}
+</ul>

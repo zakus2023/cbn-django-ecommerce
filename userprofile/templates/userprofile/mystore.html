@@ -1,0 +1,53 @@
+{% extends 'frontpage/base.html' %}
+<!--  -->
+
+{% load static %}
+<!--  -->
+{% block title %}My Store{% endblock %} {% block content%}
+<div class="container">
+  <h1>My Store</h1>
+  {% if messages %}
+  <ul class="messages list-unstyled">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <a
+    href="{% url 'add_product' %}"
+    class="py-2 px-10 bg-body-secondary text-black"
+    >Add Product</a
+  >
+
+  <!-- edited here too. it used to be in request.user.products.all -->
+  {% if products %}
+  <p>My Products</p>
+  <div class="">
+    <div class="row mt-5 mb-5 text-center d-flex">
+      <!-- edited here. it used to be in request.user.products.all -->
+      {% for product in products %}
+      <div class="col-sm w-300 h-300 p-3">
+        <a
+          class="text-decoration-none m-2"
+          href="{% url 'update_product' product.id %}"
+        >
+          <img src="{{ product.photo.url}}" class="w-100 h-50" alt="" />
+          <p class="text-black">{{product.title}}</p>
+          <p>${{product.display_price}}</p>
+          <!-- <p>{{product.updated_at}}</p> -->
+        </a>
+        <hr />
+        <p>Status: {{product.get_status_display}}</p>
+      </div>
+      
+      {% endfor %}
+      
+    </div>
+    <br /><br /><br />
+  </div>
+  {% else %}
+  <p>You don't have any product to show</p>
+  {% endif %}
+</div>
+{% endblock %}

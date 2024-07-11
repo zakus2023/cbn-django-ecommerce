@@ -1,0 +1,23 @@
+{% extends 'frontpage/base.html' %}
+<!--  -->
+
+{% load static %}
+<!--  -->
+{% block title %}Signup{% endblock %}
+<!--  -->
+
+<!--  -->
+{% block content %}
+<div class="container">
+  <h1>Signup</h1>
+  <form method="post" action=".">
+    {% csrf_token %} 
+    <div class="register d-flex flex-column gap-3">
+      {{form}}
+
+    <button class="col-1">Signup</button>
+    </div>
+  </form>
+</div>
+
+{% endblock%}

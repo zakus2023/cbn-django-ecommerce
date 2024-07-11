@@ -1,0 +1,23 @@
+{% extends 'frontpage/base.html' %}
+<!--  -->
+
+{% load static %}
+<!--  -->
+{% block title %}My Cart{% endblock %}
+
+{% block content %}
+<div class="container">
+<h1>Cart</h1>
+{% for item in cart %}
+<p>{{item.product.title}}</p>
+<p>{{item.quantity}}</p>
+<p>{{item.product.display_price}}</p>
+<p>{{item.total_price}}</p>
+<a href="{% url 'update_quantity' item.product.id %}?action=increase">+</a>
+<a href="{% url 'update_quantity' item.product.id %}?action=decrease">-</a>
+<a href="{% url 'remove_item' item.product.id %}">Remove from cart</a>
+{% endfor %}
+
+<p>{{cart.get_total_cost}}</p>
+</div>
+{% endblock %}

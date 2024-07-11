@@ -1,0 +1,36 @@
+{% extends 'frontpage/base.html' %}
+<!--  -->
+
+{% load static %}
+<!--  -->
+{% block title %}My Store{% endblock %}
+
+{% block content %}
+<div class="container ">
+    <h2>Add Product</h2>
+    <div class="w-100 container">
+      <form method="post" action="." enctype="multipart/form-data">
+        {% csrf_token %} 
+        <!--  -->
+      <div class="d-flex flex-column gap-3">
+        <div class="form-group">
+          {{form.categories}}
+      </div>
+      <div class="form-group">
+          {{form.title}}
+      </div>
+      <div class="form-group">
+          {{form.description}}
+      </div>
+      <div class="form-group">
+          {{form.price}}
+      </div>
+      <div class="form-group">
+          {{form.photo}}
+      </div>
+      <button class="col-2">Save Product</button>
+      </form>
+      <!--  -->
+      </div>
+    </div>
+{% endblock %}
