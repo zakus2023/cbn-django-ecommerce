@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from . models import Category, Product
+from . models import Category, Product, Order, OrderItem
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from . forms import OrderForm
+
 
 from . cart import Cart
 
@@ -33,7 +36,8 @@ def add_to_cart(request, product_id):
 def view_cart_view(request):
     cart = Cart(request)
     return render(request, 'products/view_cart_view.html',{
-        'cart':cart
+        'cart':cart,
+        
     })
 
 def remove_item(request, product_id):
@@ -63,3 +67,41 @@ def products(request, category_slug, slug):
         'product':product
     })
 
+@login_required
+def checkout(request):
+    cart = Cart(request)
+    if request.method == 'POST':
+
+        form = OrderForm(request.POST)
+
+        if form.is_valid():
+            total_price = 0
+
+            for item in cart:
+                product = item['product']
+                total_price += product.price * int(item['quantity'])
+
+
+
+            order = form.save(commit=False)
+            order.created_by = request.user
+            order.paid_amount = total_price
+            order.save()
+            
+            for item in cart:
+                product = item['product']
+                quantity = int(item['quantity'])
+                price = product.price * quantity
+
+            item = OrderItem.objects.create(order=order, product=product, price=price, quantity=quantity)
+            cart.clear()
+
+            return redirect('myaccount')
+
+    else:
+        form = OrderForm()
+
+    return render(request, 'products/checkout.html',{
+        'cart':cart,
+        'form':form
+    })

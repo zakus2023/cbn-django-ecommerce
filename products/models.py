@@ -2,6 +2,11 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
+from django.core.files import File
+
+from io import BytesIO
+from PIL import Image
+
 
 # Create your models here.
 
@@ -36,6 +41,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     price = models.IntegerField()
     photo = models.ImageField(upload_to='photos/', default='photos/default_photo.jpg')
+    # thumbnail = models.ImageField(upload_to='photos/thumbnail/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=ACTIVE)
@@ -48,3 +54,57 @@ class Product(models.Model):
     
     def display_price(self):
         return self.price / 100
+    
+    # def get_thumbnail(self):
+    #     if self.thumbnail:
+    #         return self.thumbnail
+    #     else:
+    #         if self.image:
+    #             self.thumbnail = self.make_thumbnail(self.image)
+    #             self.save()
+    #             return self.thumbnail.url
+    #         else:
+    #             return 'https://placehold.co/600x400/png'
+    
+    # def make_thumbnail(self, image, size=(300, 300)):
+    #     img = Image.open(image)
+    #     img.convert('RGB')
+    #     img.thumbnail(size)
+
+    #     thumb_io = BytesIO()
+    #     img.save(thumb_io, 'JPEG', quality=85)
+
+    #     thumbnail = File(thumb_io, name=image.name)
+
+    #     return thumbnail
+
+class Order(models.Model):
+    ORDERED = 'ordered'
+    SHIPPED = 'shipped'
+
+    STATUS_CHOICES = (
+        (ORDERED, 'Ordered'),
+        (SHIPPED, 'Shipped')
+    )
+
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    postalcode = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255)
+    paid_amount = models.IntegerField(blank=True, null=True)
+    is_paid = models.BooleanField(default=False)
+    merchant_id = models.CharField(max_length=255)
+    created_by = models.ForeignKey(User, related_name='orders', on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    status = models.CharField(max_length=20, choices= STATUS_CHOICES, default=ORDERED)    
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='items', on_delete=models.CASCADE)
+    price = models.IntegerField()
+    quantity = models.IntegerField(default=1)
+
