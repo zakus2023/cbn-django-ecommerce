@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import braintree
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +34,7 @@ LOGIN_URL = 'login'
 
 LOGOUT_REDIRECT_URL ='frontpage'
 LOGIN_REDIRECT_URL ='myaccount'
+WEBSITE_URL = 'http://127.0.0.1:8000/'
 
 # Application definition
 
@@ -59,6 +61,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'abdulprj.urls'
+
+STRIPE_SECRET_KEY ='sk_test_51N5quMDHDtaIvDO2D6yFfk02OWESvcXd8jKNJ0V5yQ6BbvuQaN2fEg5rH1S6ywh0Aunqq3yuBZpqtkwDM6y2JsAg00rrnsu5xi'
+STRIPE_PUB_KEY ='pk_test_51N5quMDHDtaIvDO2Uk3drmub1mgMAfWPK4p9MteJvy2cPEf8zYaOOH2sJzJUIulsBYN5r5K6UQfexdbSB4ZmIqjC00qbcuToCA'
+
 
 TEMPLATES = [
     {

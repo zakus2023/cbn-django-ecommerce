@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
@@ -7,7 +7,7 @@ from . models import Userprofile
 from django.utils.text import slugify
 from django.contrib import messages
 
-from products.models import Product, Category
+from products.models import Product, Category, Order,OrderItem
 from products.forms import ProductForm
 
 # Create your views here.
@@ -43,9 +43,11 @@ def myaccount(request):
 @login_required
 def mystore(request):
     products = request.user.products.exclude(status = Product.DELETED)
+    order_items = OrderItem.objects.filter(product__user= request.user)
 
     return render(request, 'userprofile/mystore.html', {
-        'products':products
+        'products':products,
+        'order_items':order_items
     })
 
 @login_required
@@ -98,3 +100,10 @@ def delete_product(request, id):
     product.save()
     messages.success(request, "Product Deleted successfully")
     return redirect('mystore')
+
+
+def order_details(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    return render(request, 'userprofile/order_details.html',{
+        'order':order
+    })

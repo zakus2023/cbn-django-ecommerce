@@ -10,7 +10,7 @@ class ProductModelAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class ProductModelAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'address','city', 'created_at', 'created_by','email','paid_amount','is_paid','merchant_id', 'status']
+    list_display = ['first_name', 'last_name', 'address','city', 'created_at', 'created_by','email','paid_amount','is_paid','status']
 
 @admin.register(OrderItem)
 class ProductModelAdmin(admin.ModelAdmin):

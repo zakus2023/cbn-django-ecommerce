@@ -20,6 +20,16 @@
     >Add Product</a
   >
 
+  <hr>
+  <h2>My Orders</h2>
+  {% for order_item in order_items %}
+  <a href="{% url 'order_details' order_item.order.id %}"><p>{{order_item.order.id}}</p></a>
+  <p>{{order_item.product}}</p>
+  <p>{{order_item.quantity}}</p>
+  <p>{{order_item.display_price}}</p>
+  {% endfor %}
+  <hr>
+
   <!-- edited here too. it used to be in request.user.products.all -->
   {% if products %}
   <p>My Products</p>

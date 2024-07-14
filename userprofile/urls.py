@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('signup/', views.signup, name='signup'),
     path('mystore/', views.mystore, name='mystore'),
+    path('mystore/order_details/<int:pk>', views.order_details, name='order_details'),
     path('mystore/add_product/', views.add_product, name='add_product'),
     path('mystore/update_product/<int:id>/', views.update_product, name='update_product'),
     path('mystore/delete_product/<int:id>/', views.delete_product, name='delete_product'),

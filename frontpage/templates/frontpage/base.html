@@ -133,8 +133,7 @@
           <li class="nav-item mx-2">
             <a href="{% url 'view_cart_view' %}" class="nav-link text-black"
               >Cart
-              
-              
+
               <button
                 class="border border-primary rounded-circle bg-secondary text-white"
                 style="
@@ -146,23 +145,18 @@
               >
                 {{cart_total_items}}
               </button>
-            
-              
-              
-              </a
-            >
+            </a>
           </li>
           <li class="nav-item mx-2">
             <a href="#" class="nav-link text-black">Wishlist 4</a>
           </li>
-          {% if request.user.is_vendor %}
+          {% if request.user.userprofile.is_vendor %}
           <li class="nav-item mx-2">
             <a href="{% url 'mystore' %}" class="nav-link text-black"
               >My Store</a
             >
           </li>
-          {% endif %}
-          {% else %}
+          {% endif %} {% else %}
           <li class="nav-item mx-2">
             <a href="{% url 'login' %}" class="nav-link text-black">Login</a>
           </li>
@@ -183,7 +177,8 @@
     <!--  -->
     {% block content %} {% endblock %}
     <!--  -->
-
+    {% block scripts %} {% endblock %}
+    
     <br /><br /><br />
 
     <footer class="text-center bg-body-secondary fixed-bottom p-3">
@@ -195,7 +190,7 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"
   ></script>
-  <script script="{% static 'app/js/all.min.js' %}"></script>
+  <!-- <script script="{% static 'app/js/all.min.js' %}"></script>
   <script script="{%static 'app/js/owl.carousel.min.js' %}"></script>
-  <script script="{% static 'app/js/myscript.js' %}"></script>
+  <script script="{% static 'app/js/myscript.js' %}"></script> -->
 </html>

@@ -1,0 +1,34 @@
+{% extends 'frontpage/base.html' %}
+<!--  -->
+
+{% load static %}
+<!--  -->
+{% block title %}My Cart{% endblock %} 
+<!--  -->
+{% block content %}
+<div class="container">
+    <h1>Order Details</h1>
+    <h2>Customer details</h2>
+   <hr>
+    <p>{{order.first_name}} {{order.last_name}}</p>
+    <p>{{order.address}}</p>
+    <p>{{order.postalcode}}</p>
+    <p>{{order.city}}</p>
+    <p>{{order.email}}</p>
+    <p>{{order.phone}}</p>
+    <p>{{order.merchant_id}}</p>
+    <p>{{order.created_at}}</p>
+    <hr>
+
+    <h2>Products to ship in this order</h2>
+    <hr>
+    {% for item in order.items.all %}
+    {% if item.product.user == request.user %}
+    <p>{{item.product.title}}</p>
+    <p>{{item.quantity}}</p>
+    <p>${{item.display_price}}</p>
+    
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
