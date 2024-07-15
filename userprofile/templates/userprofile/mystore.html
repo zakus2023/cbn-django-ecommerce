@@ -5,7 +5,20 @@
 <!--  -->
 {% block title %}My Store{% endblock %} {% block content%}
 <div class="container">
-  <h1>My Store</h1>
+ <div class="" style="display: flex; align-items: center; justify-content: space-between;">
+  <div class="">
+    <h1>My Store</h1>
+  </div>
+  
+  
+
+  <div class="">
+    <a
+    href="{% url 'add_product' %}"
+    class="py-2 px-10 bg-body-secondary text-black"
+    style="padding: 7px; background-color: green; text-decoration: none; color: black; font-size: 20px;">Add Product</a
+  >
+  </div>
   {% if messages %}
   <ul class="messages list-unstyled">
     {% for message in messages %}
@@ -13,51 +26,93 @@
     {% endfor %}
   </ul>
   {% endif %}
+ </div>
 
-  <a
-    href="{% url 'add_product' %}"
-    class="py-2 px-10 bg-body-secondary text-black"
-    >Add Product</a
-  >
-
-  <hr>
+  <hr />
   <h2>My Orders</h2>
-  {% for order_item in order_items %}
-  <a href="{% url 'order_details' order_item.order.id %}"><p>{{order_item.order.id}}</p></a>
-  <p>{{order_item.product}}</p>
-  <p>{{order_item.quantity}}</p>
-  <p>{{order_item.display_price}}</p>
-  {% endfor %}
-  <hr>
-
-  <!-- edited here too. it used to be in request.user.products.all -->
-  {% if products %}
-  <p>My Products</p>
-  <div class="">
-    <div class="row mt-5 mb-5 text-center d-flex">
-      <!-- edited here. it used to be in request.user.products.all -->
-      {% for product in products %}
-      <div class="col-sm w-300 h-300 p-3">
+  <table>
+    <tr style="background: lightgray">
+      <th style="width: 150px; text-align: center; padding: 10px">Order ID</th>
+      <th style="width: 250px; text-align: center; padding: 10px">Item</th>
+      <th style="width: 100px; text-align: center; padding: 10px">Quantity</th>
+      <th style="width: 100px; text-align: center; padding: 10px">
+        Unit Price
+      </th>
+      <th style="width: 100px; text-align: center; padding: 10px">
+        Total Price
+      </th>
+    </tr>
+    {% for order_item in order_items %}
+    <tr style="border: 1px solid">
+      <td style="text-align: center; padding: 10px">
         <a
-          class="text-decoration-none m-2"
-          href="{% url 'update_product' product.id %}"
+          href="{% url 'order_details' order_item.order.id %}"
+          style="text-decoration: none; color: white; background: green;padding: 10px; border-radius: 5px;"
+          >{{ order_item.order.id }}</a
         >
-          <img src="{{ product.photo.url}}" class="w-100 h-50" alt="" />
-          <p class="text-black">{{product.title}}</p>
-          <p>${{product.display_price}}</p>
-          <!-- <p>{{product.updated_at}}</p> -->
-        </a>
-        <hr />
-        <p>Status: {{product.get_status_display}}</p>
-      </div>
-      
-      {% endfor %}
-      
+      </td>
+      <td style="text-align: center; padding: 5px">{{ order_item.product }}</td>
+      <td style="text-align: center; padding: 5px">
+        {{ order_item.quantity }}
+      </td>
+      <td style="text-align: center; padding: 5px">
+        ${{ order_item.product.display_price }}
+      </td>
+      <td style="text-align: center; padding: 5px">
+        ${{ order_item.display_price }}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <hr />
+  <!-- .............................................................................. -->
+
+  <!-- ............................................................................ -->
+
+  {% if products %}
+  <h2>My Products</h2>
+  <div class="" style="display: flex; flex-wrap: wrap; justify-content: center">
+    {% for product in products %}
+    <div
+      style="
+        background: rgb(233, 231, 231);
+        margin: 4px;
+        border-radius: 5px;
+        display: flex;
+        padding: 2px;
+        flex-wrap: wrap;
+      "
+    >
+      <a
+        class="text-decoration-none m-2"
+        href="{% url 'update_product' product.id %}"
+        style="display: flex; flex-direction: column; width: 250px"
+      >
+        <div class="image" style="width: 100%">
+          <img
+            src="{{ product.photo.url}}"
+            class=""
+            alt=""
+            style="width: 100%; height: 250px; padding: 5px"
+          />
+        </div>
+        <div class="details" style="text-align: left">
+          <span class="text-black">Product: {{product.title}}</span>
+          <div>
+            <span>${{product.display_price}}</span> -
+            <span>{{product.categories}}</span>
+          </div>
+          <span>Status: {{product.get_status_display}}</span>
+        </div>
+      </a>
     </div>
-    <br /><br /><br />
+
+    {% endfor %}
   </div>
   {% else %}
   <p>You don't have any product to show</p>
   {% endif %}
+  <br /><br /><br />
+
+  {% endblock %}
 </div>
-{% endblock %}

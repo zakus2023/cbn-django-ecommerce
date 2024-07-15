@@ -8,7 +8,43 @@
   <h1 class="mb-6 text-2xl">Checkout</h1>
 
   <h2 class="text-xl text-gray-500">Total cost: ${{ cart.get_total_cost }}</h2>
-  {{ form.as_p }}
+  <div
+    class="form"
+    style="
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    "
+  >
+    <!-- {{ form }} -->
+
+    <div class="form-group" style="display: flex; flex-direction: column;  width: 50%">
+      {{ form.first_name.label_tag }} {{ form.first_name }}
+    </div>
+    <div class="form-group" style="display: flex; flex-direction: column;  width: 50%">
+      {{ form.last_name.label_tag }} {{ form.last_name }}
+    </div>
+    <div class="form-group" style="display: flex; flex-direction: column;  width: 50%">
+      {{ form.address.label_tag }} {{ form.address }}
+    </div>
+    <div class="form-group" style="display: flex; flex-direction: column;  width: 50%">
+      {{ form.postalcode.label_tag }} {{ form.postalcode }}
+    </div>
+    <div class="form-group" style="display: flex; flex-direction: column;  width: 50%">
+      {{ form.city.label_tag }} {{ form.city }}
+    </div>
+    <div class="form-group" style="display: flex; flex-direction: column;  width: 50%">
+      {{ form.email.label_tag }} {{ form.email }}
+    </div>
+    <div
+      class="form-group"
+      style="display: flex; flex-direction: column; width: 50%"
+    >
+      {{ form.phone.label_tag }} {{ form.phone }}
+    </div>
+  </div>
   <div id="errors" class="hidden"></div>
   <button class="" onclick="buy(event)">Checkout</button>
 </div>

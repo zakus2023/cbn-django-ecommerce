@@ -3,32 +3,50 @@
 
 {% load static %}
 <!--  -->
-{% block title %}My Cart{% endblock %} 
+{% block title %}My Cart{% endblock %}
 <!--  -->
 {% block content %}
 <div class="container">
-    <h1>Order Details</h1>
-    <h2>Customer details</h2>
-   <hr>
-    <p>{{order.first_name}} {{order.last_name}}</p>
-    <p>{{order.address}}</p>
-    <p>{{order.postalcode}}</p>
-    <p>{{order.city}}</p>
-    <p>{{order.email}}</p>
-    <p>{{order.phone}}</p>
-    <p>{{order.merchant_id}}</p>
-    <p>{{order.created_at}}</p>
-    <hr>
+  <h1>Order Details</h1>
+  <h2>Customer details</h2>
+  <hr />
+  <table>
+    <tr>
+      <th style="width: 150px; text-align: center; padding: 10px">Customer Name</th>
+      <th style="width: 250px; text-align: center; padding: 10px">Address</th>
+      <th style="width: 150px; text-align: center; padding: 10px">Email</th>
+      <th style="width: 150px; text-align: center; padding: 10px">Phone</th>
+      <th style="width: 150px; text-align: center; padding: 10px">Order Date</th>
+    </tr>
+    <tr>
+      <td style="width: 150px; text-align: center; padding: 10px">{{order.first_name}} {{order.last_name}}</td>
+      <td style="width: 150px; text-align: center; padding: 10px">{{order.address}} {{order.city}} {{order.postalcode}}</td>
+      <td style="width: 150px; text-align: center; padding: 10px">{{order.email}}</td>
+      <td style="width: 150px; text-align: center; padding: 10px">{{order.phone}}</td>
+      <td style="width: 150px; text-align: center; padding: 10px">{{order.created_at}}</td>
+    </tr>
+  </table>
 
-    <h2>Products to ship in this order</h2>
-    <hr>
-    {% for item in order.items.all %}
-    {% if item.product.user == request.user %}
-    <p>{{item.product.title}}</p>
-    <p>{{item.quantity}}</p>
-    <p>${{item.display_price}}</p>
-    
+  <hr />
+
+  <h2>Products to ship in this order</h2>
+  <hr />
+
+  <table>
+    {% for item in order.items.all %} {% if item.product.user == request.user %}
+    <tr>
+      <th style="width: 150px; text-align: center; padding: 10px">Product</th>
+      <th style="width: 150px; text-align: center; padding: 10px">Quantity</th>
+      <th style="width: 150px; text-align: center; padding: 10px">Total Price</th>
+    </tr>
+    <tr>
+      <td style="width: 150px; text-align: center; padding: 10px">{{item.product.title}}</td>
+      <td style="width: 150px; text-align: center; padding: 10px">{{item.quantity}}</td>
+      <td style="width: 150px; text-align: center; padding: 10px">${{item.display_price}}</td>
+    </tr>
     {% endif %}
+    <!--  -->
     {% endfor %}
+  </table>
 </div>
 {% endblock %}

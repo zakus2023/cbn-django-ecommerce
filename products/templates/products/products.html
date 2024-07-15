@@ -8,24 +8,47 @@
 <!--  -->
 
 {% block content %}
-<div class="d-flex flex-column">
-  <div class="container">
-    <div class="row mt-5 mb-5 text-center d-flex">
-      <div class="col-sm w-100 h-100 p-3">
-        <img src="{{ product.photo.url }}" class="w-25 h-25" alt="" />
-        <p class="text-black">
-          {{product.title}} -
-          <a href="{% url 'vendor_detail' product.user.id %}"
-            >{% firstof product.user.get_full_name product.user.username %}</a
-          >
-        </p>
-        <p>${{product.display_price}}</p>
-        <p>{{product.updated_at}}</p>
-        <a href="{% url 'add_to_cart' product.id %}">Add to cart</a>
+
+<div class="container">
+  <h1>Product Details</h1>
+
+  <div class="item-details" style="display: flex; border-radius: 5px">
+    <div
+      style="padding: 15px; display: flex; gap: 15px; justify-content: center"
+    >
+      <img src="{{ product.photo.url }}" alt="" style="width: 50%; border-radius: 5px;" />
+      <div style="text-align: left; display: flex; flex-direction: column">
+        <span class="text-black" style="font-size: 25px; margin-bottom: 10px;"
+          >Title: {{product.title}}</span
+        >
+        <span style="font-size: 18px; margin-bottom: 10px;">Price: ${{product.display_price}} </span>
+        <span style="font-size: 18px; margin-bottom: 10px;"
+          >Last updated: {{product.updated_at}}</span
+        >
+        <span>Description:</span>
+        <span style="font-size: 18px; margin-bottom: 10px;">{{product.description}}</span>
+        <a
+          href="{% url 'add_to_cart' product.id %}"
+          style="
+            background: green;
+            width: fit-content;
+            padding: 7px;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 10px;
+          "
+          >Add to cart</a
+        >
+        <a href="{% url 'vendor_detail' product.user.id %}" style="text-decoration: none; padding: 8px; border-radius: 5px; color: black;width: fit-content
+        ; font-size: 20px; background: lightgray;"
+          >Seller: {% firstof product.user.get_full_name product.user.username %} <br> Click to visit store</a
+        >
       </div>
     </div>
-    <br /><br /><br />
   </div>
 </div>
+
 <!--  -->
 {% endblock %}

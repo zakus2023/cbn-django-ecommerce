@@ -3,40 +3,104 @@
 
 {% load static %}
 <!--  -->
-{% block title %}My Cart{% endblock %} 
+{% block title %}My Cart{% endblock %}
 <!--  -->
 {% block content %}
 <div class="container">
   <h1>Cart</h1>
   {% if cart|length %}
-  {% for item in cart %}
-  <div class="cart d-flex gap-5">
-    <div class="cart-item"><p>{{item.product.title}}</p></div>
-    <div class="cart-item"><p>{{item.quantity}}</p></div>
-    <div class="cart-item"><p>{{item.product.display_price}}</p></div>
-    <div class="cart-item"><p>{{item.total_price}}</p></div>
+  <!--  -->
 
-    <div class="cart-item">
-      <a href="{% url 'update_quantity' item.product.id %}?action=increase"
-        >+</a
-      >
-    </div>
-    <div class="cart-item">
-      <a href="{% url 'update_quantity' item.product.id %}?action=decrease"
-        >-</a
-      >
-    </div>
+  <table>
+    {% for item in cart %}
+    <tr style="background: lightgray;">
+      <th style="width: 150px; text-align: center; padding: 10px">Item</th>
+      <th style="width: 150px; text-align: center; padding: 10px">Quantity</th>
+      <th style="width: 150px; text-align: center; padding: 10px">
+        Unit Price
+      </th>
+      <th style="width: 150px; text-align: center; padding: 10px">
+        Total Price
+      </th>
+      <th style="width: 150px; text-align: center; padding: 10px">
+        Increse Quant
+      </th>
+      <th style="width: 150px; text-align: center; padding: 10px">
+        Decrease Quant
+      </th>
+      <th style="width: 150px; text-align: center; padding: 10px">
+        Remove Item
+      </th>
+    </tr>
+    <tr style="border-bottom: 1px solid;">
+      <td style="width: 150px; text-align: center; padding: 10px;font-size: 18px;">
+        {{item.product.title}}
+      </td>
+      <td style="width: 150px; text-align: center; padding: 10px; font-size: 18px;">
+        {{item.quantity}}
+      </td>
+      <td style="width: 150px; text-align: center; padding: 10px; font-size: 18px;">
+        ${{item.product.display_price}}
+      </td>
+      <td style="width: 150px; text-align: center; padding: 10px; font-size: 18px;">
+        ${{item.total_price}}
+      </td>
+      <td style="width: 150px; text-align: center; padding: 10px">
+        <a
+          style="
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: 600;
+            color: green;
+            
+            
+          "
+          href="{% url 'update_quantity' item.product.id %}?action=increase"
+          >+</a
+        >
+      </td>
+      <td style="width: 150px; text-align: center; padding: 10px">
+        <a
+          style="
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: 600;
+            color: red;
+            
+          "
+          href="{% url 'update_quantity' item.product.id %}?action=decrease"
+          >-</a
+        >
+      </td>
+      <td style="width: 190px; text-align: center; padding: 10px">
+        <a href="{% url 'remove_item' item.product.id %}" style="text-decoration: none; color: red; font-size: 18px;">Remove from cart</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 
-    <div class="cart-item">
-      <a href="{% url 'remove_item' item.product.id %}">Remove from cart</a>
-    </div>
+  <div class="" style="display: flex; gap: 15px; flex-direction: column">
+    <p style="font-size: 20px; font-weight: 500">
+      Total to pay: ${{cart.get_total_cost}}
+    </p>
+    <a
+      href="{% url 'checkout' %}"
+      style="
+        text-decoration: none;
+        color: white;
+        background: green;
+        padding: 8px;
+        border-radius: 5px;
+        font-weight: 500;
+        width: fit-content;
+      "
+      >Proceed to checkout</a
+    >
   </div>
-
-  {% endfor %}
-  <p>{{cart.get_total_cost}}</p>
-  <a href="{% url 'checkout' %}">Proceed to checkout</a>
   {% else %}
-  <h3 style="padding: 3px; background-color: antiquewhite;">You have no items in the cart</h3>
+  <h3 style="padding: 3px; background-color: antiquewhite">
+    You have no items in the cart
+  </h3>
   {% endif %}
 </div>
 
